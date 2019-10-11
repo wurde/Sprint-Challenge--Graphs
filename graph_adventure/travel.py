@@ -37,6 +37,7 @@ class Travel:
         self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
 
         while len(visited_rooms) < len(self.world.rooms):
+            prevRoom = currentRoom
             nextDirection = currentExits[random.randint(0, len(currentExits) - 1)]
             self.player.travel(nextDirection)
             self.path.append(nextDirection)
@@ -46,8 +47,23 @@ class Travel:
             adjacentRooms = dict([(d,'?') for d in currentExits])
 
             if currentRoom not in visited_rooms:
+                self.traversalGraph[prevRoom.id][1][nextDirection] = currentRoom.id
+                adjacentRooms[self.reverseDirection(nextDirection)] = prevRoom.id
                 self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
                 visited_rooms.add(currentRoom)
+
+    """
+    Return the reverse direction.
+    """
+    def reverseDirection(self, direction):
+        if direction == "n":
+            return "s"
+        elif direction == "s":
+            return "n"
+        elif direction == "e":
+            return "w"
+        elif direction == "w":
+            return "e"
 
 #
 # Execute commands
@@ -64,7 +80,7 @@ if __name__ == '__main__':
     # Load room graph
     #
 
-    world.loadGraph(graph5)
+    world.loadGraph(graph2)
     world.printRooms()
 
     #
@@ -80,11 +96,12 @@ if __name__ == '__main__':
     travel = Travel(world, player)
     travel.start()
 
-    count = 0
-    while len(travel.traversalGraph) <= len(world.rooms) and len(travel.path) > 28000:
-        count += 1
-        travel = Travel(world, player)
-        travel.start()
-        print(f"Attempt: {count}, Move Count: {len(travel.path)} {len(travel.traversalGraph)} {len(world.rooms)}")
+    # count = 0
+    # while len(travel.traversalGraph) <= len(world.rooms) and len(travel.path) > 2000:
+    #     count += 1
+    #     travel = Travel(world, player)
+    #     travel.start()
+    #     print(f"Attempt: {count}, Move Count: {len(travel.path)} {len(travel.traversalGraph)} {len(world.rooms)}")
 
+    print(f"traversalGraph: {travel.traversalGraph}")
     print(f"Path: {travel.path}")
