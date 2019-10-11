@@ -8,6 +8,10 @@ from world import World
 from stack import Stack
 from queue import Queue
 from graphs.graph1 import graph1
+from graphs.graph2 import graph2
+from graphs.graph3 import graph3
+from graphs.graph4 import graph4
+from graphs.graph5 import graph5
 
 #
 # Define a traversal algorithm
@@ -74,7 +78,7 @@ if __name__ == '__main__':
     # Load room graph
     #
 
-    world.loadGraph(graph1)
+    world.loadGraph(graph2)
     world.printRooms()
 
     #
