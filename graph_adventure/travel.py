@@ -36,14 +36,14 @@ class Travel:
             nextDirection = currentExits[random.randint(0, len(currentExits) - 1)]
             self.player.travel(nextDirection)
             self.path.append(nextDirection)
+
             currentRoom = self.player.currentRoom
+            currentExits = currentRoom.getExits()
+            adjacentRooms = dict([(d,'?') for d in currentExits])
 
             if currentRoom.id not in visited_rooms:
                 visited_rooms.add(currentRoom.id)
                 self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
-
-            currentExits = currentRoom.getExits()
-            adjacentRooms = dict([(d,'?') for d in currentExits])
 
         print(f"self.traversalGraph {self.traversalGraph}")
 
