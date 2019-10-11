@@ -51,16 +51,20 @@ class Travel:
             self.path.append(nextDirection)
 
             currentRoom = self.player.currentRoom
-            currentExits = currentRoom.getExits()
-            adjacentRooms = dict([(d,'?') for d in currentExits])
+            self.traversalGraph[prevRoom.id][1][nextDirection] = currentRoom.id
 
             if currentRoom not in visitedRooms:
-                self.traversalGraph[prevRoom.id][1][nextDirection] = currentRoom.id
+                currentExits = currentRoom.getExits()
+                adjacentRooms = dict([(d,'?') for d in currentExits])
                 adjacentRooms[self.reverseDirection(nextDirection)] = prevRoom.id
                 self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
                 visitedRooms.add(currentRoom)
+            else:
+                adjacentRooms = self.traversalGraph[currentRoom.id][1]
+                adjacentRooms[self.reverseDirection(nextDirection)] = prevRoom.id
+                self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
             
-            # print(f"Move {nextDirection} {prevRoom.id}->{currentRoom.id}   {self.traversalGraph}")
+            # print(f"Move {nextDirection} {prevRoom.id}->{currentRoom.id}   {self.traversalGraph}\n")
             nextDirection = None
 
     """
@@ -91,7 +95,7 @@ if __name__ == '__main__':
     # Load room graph
     #
 
-    world.loadGraph(graph2)
+    world.loadGraph(graph5)
     world.printRooms()
 
     #
