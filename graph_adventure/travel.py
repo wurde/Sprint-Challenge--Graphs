@@ -45,23 +45,9 @@ class Travel:
             currentExits = currentRoom.getExits()
             adjacentRooms = dict([(d,'?') for d in currentExits])
 
-            if currentRoom.id not in visited_rooms:
-                visited_rooms.add(currentRoom.id)
+            if currentRoom not in visited_rooms:
                 self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
-
-        print(f"self.traversalGraph {self.traversalGraph}")
-
-        # while stack.size() > 0:
-        #     nextDirection = stack.pop()
-        #     self.player.travel(nextDirection)
-        #     self.path.append(nextDirection)
-        #     visited_rooms.append(player.currentRoom)
-
-        #     if player.currentRoom.id not in self.traversalGraph:
-        #         self.traversalGraph[self.player.currentRoom.id] = [
-        #             set(player.currentRoom.getCoords()),
-        #             player.currentRoom.getExits()
-        #         ]
+                visited_rooms.add(currentRoom)
 
 #
 # Execute commands
@@ -78,7 +64,7 @@ if __name__ == '__main__':
     # Load room graph
     #
 
-    world.loadGraph(graph1)
+    world.loadGraph(graph5)
     world.printRooms()
 
     #
@@ -93,4 +79,12 @@ if __name__ == '__main__':
 
     travel = Travel(world, player)
     travel.start()
+
+    count = 0
+    while len(travel.traversalGraph) <= len(world.rooms) and len(travel.path) > 28000:
+        count += 1
+        travel = Travel(world, player)
+        travel.start()
+        print(f"Attempt: {count}, Move Count: {len(travel.path)} {len(travel.traversalGraph)} {len(world.rooms)}")
+
     print(f"Path: {travel.path}")
