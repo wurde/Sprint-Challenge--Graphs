@@ -2,8 +2,6 @@
 # Dependencies
 #
 
-import random
-from room import Room
 from player import Player
 from world import World
 from graphs.graph1 import graph1
