@@ -5,6 +5,8 @@
 import random
 from player import Player
 from world import World
+from stack import Stack
+from queue import Queue
 from graphs.graph1 import graph1
 
 #
@@ -15,6 +17,7 @@ class Travel:
     def __init__(self, world, player):
         self.world = world
         self.player = player
+        self.traversalGraph = {}
         self.path = []
 
     def start(self):
