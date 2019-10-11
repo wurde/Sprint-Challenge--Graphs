@@ -32,13 +32,13 @@ class Travel:
         for direction in self.player.currentRoom.getExits():
             stack.push(direction)
 
-        while stack.size > 0:
+        while stack.size() > 0:
             nextDirection = stack.pop()
             self.player.travel(nextDirection)
             self.path.append(nextDirection)
 
-            if player.currentRoom.id not in traversalGraph:
-                traversalGraph[player.currentRoom.id] = [
+            if player.currentRoom.id not in self.traversalGraph:
+                self.traversalGraph[self.player.currentRoom.id] = [
                     set(player.currentRoom.getCoords()),
                     player.currentRoom.getExits()
                 ]
@@ -61,6 +61,7 @@ if __name__ == '__main__':
     #
 
     world.loadGraph(graph1)
+    world.printRooms()
 
     #
     # Define player
@@ -72,6 +73,9 @@ if __name__ == '__main__':
     # Travel the world using the player
     #
 
-    travel = Travel(world, player)
-    travel.start()
-    print(travel.path)
+    # travel = Travel(world, player)
+    # travel.start()
+    # print(travel.path)
+
+    for roomID in graph1:
+        print(f"roomID={roomID}")
