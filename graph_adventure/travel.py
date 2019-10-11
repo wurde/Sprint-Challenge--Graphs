@@ -28,17 +28,23 @@ class Travel:
     Traverse the world.
     """
     def start(self):
-        visited_rooms = set()
+        visitedRooms = set()
         stack = Stack()
 
         currentRoom = self.player.currentRoom
+        visitedRooms.add(currentRoom)
         currentExits = currentRoom.getExits()
         adjacentRooms = dict([(d,'?') for d in currentExits])
         self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
 
-        while len(visited_rooms) < len(self.world.rooms):
+        while len(visitedRooms) < len(self.world.rooms):
+            for direction in dict.keys(self.traversalGraph[currentRoom.id][1]):
+                if self.traversalGraph[currentRoom.id][1][direction] == '?':
+                    nextDirection = direction
+            if nextDirection is None:
+                nextDirection = currentExits[random.randint(0, len(currentExits) - 1)]
+
             prevRoom = currentRoom
-            nextDirection = currentExits[random.randint(0, len(currentExits) - 1)]
             self.player.travel(nextDirection)
             self.path.append(nextDirection)
 
@@ -46,11 +52,13 @@ class Travel:
             currentExits = currentRoom.getExits()
             adjacentRooms = dict([(d,'?') for d in currentExits])
 
-            if currentRoom not in visited_rooms:
+            if currentRoom not in visitedRooms:
                 self.traversalGraph[prevRoom.id][1][nextDirection] = currentRoom.id
                 adjacentRooms[self.reverseDirection(nextDirection)] = prevRoom.id
                 self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
-                visited_rooms.add(currentRoom)
+                visitedRooms.add(currentRoom)
+            
+            nextDirection = None
 
     """
     Return the reverse direction.
@@ -80,7 +88,7 @@ if __name__ == '__main__':
     # Load room graph
     #
 
-    world.loadGraph(graph2)
+    world.loadGraph(graph1)
     world.printRooms()
 
     #
@@ -103,5 +111,5 @@ if __name__ == '__main__':
     #     travel.start()
     #     print(f"Attempt: {count}, Move Count: {len(travel.path)} {len(travel.traversalGraph)} {len(world.rooms)}")
 
-    print(f"traversalGraph: {travel.traversalGraph}")
+    # print(f"traversalGraph: {travel.traversalGraph}")
     print(f"Path: {travel.path}")
