@@ -26,10 +26,10 @@ world = World()
 #
 
 # roomGraph = graph1
-# roomGraph = graph2
+roomGraph = graph2
 # roomGraph = graph3
 # roomGraph = graph4
-roomGraph = graph5
+# roomGraph = graph5
 
 #
 # Load room graph
@@ -54,10 +54,10 @@ player = Player("Name", world.startingRoom)
 #
 
 # traversalPath = traversal1
-# traversalPath = traversal2
+traversalPath = traversal2
 # traversalPath = traversal3
 # traversalPath = traversal4
-traversalPath = traversal5
+# traversalPath = traversal5
 
 #
 # Test traversal path

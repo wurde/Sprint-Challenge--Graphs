@@ -42,7 +42,9 @@ class Travel:
                 if self.traversalGraph[currentRoom.id][1][direction] == '?':
                     nextDirection = direction
             if nextDirection is None:
-                nextDirection = currentExits[random.randint(0, len(currentExits) - 1)]
+                nextDirection = stack.pop()
+            else:
+                stack.push(self.reverseDirection(nextDirection))
 
             prevRoom = currentRoom
             self.player.travel(nextDirection)
@@ -58,6 +60,7 @@ class Travel:
                 self.traversalGraph[currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
                 visitedRooms.add(currentRoom)
             
+            # print(f"Move {nextDirection} {prevRoom.id}->{currentRoom.id}   {self.traversalGraph}")
             nextDirection = None
 
     """
@@ -88,7 +91,7 @@ if __name__ == '__main__':
     # Load room graph
     #
 
-    world.loadGraph(graph1)
+    world.loadGraph(graph2)
     world.printRooms()
 
     #
