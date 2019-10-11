@@ -1,6 +1,14 @@
+#
+# Dependencies
+#
+
 from room import Room
 import random
 import math
+
+"""
+A simple World class.
+"""
 
 class World:
     def __init__(self):
@@ -8,6 +16,7 @@ class World:
         self.rooms = {}
         self.roomGrid = []
         self.gridSize = 0
+
     def loadGraph(self, roomGraph):
         numRooms = len(roomGraph)
         rooms = [None] * numRooms
@@ -33,6 +42,7 @@ class World:
             if 'w' in roomGraph[roomID][1]:
                 self.rooms[roomID].connectRooms('w', self.rooms[roomGraph[roomID][1]['w']])
         self.startingRoom = self.rooms[0]
+
     def printRooms(self):
         rotatedRoomGrid = []
         for i in range(0, len(self.roomGrid)):
@@ -40,10 +50,12 @@ class World:
         for i in range(len(self.roomGrid)):
             for j in range(len(self.roomGrid[0])):
                 rotatedRoomGrid[len(self.roomGrid[0]) - j - 1][i] = self.roomGrid[i][j]
+
         f = open("map.txt", "w")
         f.write("#####")
         print("#####")
         str = ""
+
         for row in rotatedRoomGrid:
             allNull = True
             for room in row:
@@ -84,6 +96,7 @@ class World:
                 else:
                     str += "     "
             str += "#\n"
+
         f.write(str)
         f.write("#####")
         f.close()
