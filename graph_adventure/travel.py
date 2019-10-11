@@ -78,7 +78,7 @@ if __name__ == '__main__':
     # Load room graph
     #
 
-    world.loadGraph(graph2)
+    world.loadGraph(graph1)
     world.printRooms()
 
     #
