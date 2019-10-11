@@ -20,14 +20,16 @@ class Travel:
         self.traversalGraph = {}
         self.path = []
 
-    # HINT player.currentRoom.id  #=> 0
-    # HINT player.currentRoom.getExits() #=> ['n']
-    # HINT player.currentRoom.getRoomInDirection('n') #=> <Room id=1 />
-    # HINT player.travel(direction)
+    """
+    Traverse the world.
+    """
     def start(self):
-        # TODO Traverse the world.
-        visited = set()
+        visited_rooms = set()
         stack = Stack()
+
+        currentRoom = self.player.currentRoom
+        adjacentRooms = dict([(d,'?') for d in currentRoom.getExits()])
+        self.traversalGraph[self.player.currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
 
         for direction in self.player.currentRoom.getExits():
             stack.push(direction)
@@ -36,14 +38,13 @@ class Travel:
             nextDirection = stack.pop()
             self.player.travel(nextDirection)
             self.path.append(nextDirection)
+            visited_rooms.append(player.currentRoom)
 
             if player.currentRoom.id not in self.traversalGraph:
                 self.traversalGraph[self.player.currentRoom.id] = [
                     set(player.currentRoom.getCoords()),
                     player.currentRoom.getExits()
                 ]
-
-        print(f"Path: {self.path}")
 
 #
 # Execute commands
@@ -73,9 +74,6 @@ if __name__ == '__main__':
     # Travel the world using the player
     #
 
-    # travel = Travel(world, player)
-    # travel.start()
-    # print(travel.path)
-
-    for roomID in graph1:
-        print(f"roomID={roomID}")
+    travel = Travel(world, player)
+    travel.start()
+    print(f"Path: {travel.path}")
