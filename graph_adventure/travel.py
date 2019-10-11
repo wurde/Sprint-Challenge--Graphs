@@ -28,23 +28,24 @@ class Travel:
         stack = Stack()
 
         currentRoom = self.player.currentRoom
-        adjacentRooms = dict([(d,'?') for d in currentRoom.getExits()])
+        currentExits = currentRoom.getExits()
+        adjacentRooms = dict([(d,'?') for d in currentExits])
         self.traversalGraph[self.player.currentRoom.id] = [(currentRoom.x, currentRoom.y), adjacentRooms]
 
-        for direction in self.player.currentRoom.getExits():
-            stack.push(direction)
+        print(f"self.world.rooms {self.world.rooms}")
+        # print(f"len(self.world.rooms)")
 
-        while stack.size() > 0:
-            nextDirection = stack.pop()
-            self.player.travel(nextDirection)
-            self.path.append(nextDirection)
-            visited_rooms.append(player.currentRoom)
+        # while stack.size() > 0:
+        #     nextDirection = stack.pop()
+        #     self.player.travel(nextDirection)
+        #     self.path.append(nextDirection)
+        #     visited_rooms.append(player.currentRoom)
 
-            if player.currentRoom.id not in self.traversalGraph:
-                self.traversalGraph[self.player.currentRoom.id] = [
-                    set(player.currentRoom.getCoords()),
-                    player.currentRoom.getExits()
-                ]
+        #     if player.currentRoom.id not in self.traversalGraph:
+        #         self.traversalGraph[self.player.currentRoom.id] = [
+        #             set(player.currentRoom.getCoords()),
+        #             player.currentRoom.getExits()
+        #         ]
 
 #
 # Execute commands
