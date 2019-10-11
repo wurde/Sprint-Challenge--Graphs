@@ -3,8 +3,6 @@
 #
 
 from room import Room
-import random
-import math
 
 """
 A simple World class.

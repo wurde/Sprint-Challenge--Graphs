@@ -20,11 +20,30 @@ class Travel:
         self.traversalGraph = {}
         self.path = []
 
+    # HINT player.currentRoom.id  #=> 0
+    # HINT player.currentRoom.getExits() #=> ['n']
+    # HINT player.currentRoom.getRoomInDirection('n') #=> <Room id=1 />
+    # HINT player.travel(direction)
     def start(self):
-        # Traverse the world.
-        self.path.append('n')
-        self.path.append('n')
-        self.path.append('n')
+        # TODO Traverse the world.
+        visited = set()
+        stack = Stack()
+
+        for direction in self.player.currentRoom.getExits():
+            stack.push(direction)
+
+        while stack.size > 0:
+            nextDirection = stack.pop()
+            self.player.travel(nextDirection)
+            self.path.append(nextDirection)
+
+            if player.currentRoom.id not in traversalGraph:
+                traversalGraph[player.currentRoom.id] = [
+                    set(player.currentRoom.getCoords()),
+                    player.currentRoom.getExits()
+                ]
+
+        print(f"Path: {self.path}")
 
 #
 # Execute commands
